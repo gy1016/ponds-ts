@@ -5,3 +5,5 @@ webpack.config.js
 *.css
 *.less
 *.html
+*.md
+src/App.tsx
