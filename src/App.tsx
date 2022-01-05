@@ -1,11 +1,10 @@
 import React, { FC } from 'react';
+import UnauthenticatedApp from './views/sys/unauthenticated-app';
 
 const App: FC = () => {
-  return (
-    <div>
-      <h1>Hello React + TypeScript</h1>
-    </div>
-  );
+  const user = 'gy';
+
+  return <div id="app">{user ? <div>登录成功</div> : <UnauthenticatedApp />}</div>;
 };
 
 export default App;
