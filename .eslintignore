@@ -7,3 +7,4 @@ webpack.config.js
 *.html
 *.md
 src/App.tsx
+yarn.lock
