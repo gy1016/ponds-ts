@@ -15,6 +15,10 @@
       如果指定了typeRoots，只有typeRoots下面的包才会被包含进来。
       如果指定了types，只有被列出来的包才会被包含进来。
     */
-    "typeRoots": ["node_modules/@types", "src/typings"] // 指定类型文件的搜索目录
+    // "typeRoots": ["node_modules/@types", "src/typings"] // 指定类型文件的搜索目录
+    "baseUrl": ".", // 指定编译的基础路径
+    "paths": {
+      "@/*": ["src/*"]
+    } // 指定编译的基础路径
   }
 }

@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import UnauthenticatedApp from './views/sys/unauthenticated-app';
+import UnauthenticatedApp from '@/views/sys/unauthenticated-app';
 
 const App: FC = () => {
   const user = 'gy';
