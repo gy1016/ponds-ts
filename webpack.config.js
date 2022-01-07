@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const StylelintWebpackPlugin = require('stylelint-webpack-plugin');
+const { getThemeVariables } = require('antd/dist/theme');
 
 module.exports = {
   entry: './src/index.tsx',
@@ -23,7 +24,22 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        use: ['style-loader', 'css-loader', 'less-loader'],
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'less-loader',
+            options: {
+              lessOptions: {
+                modifyVars: getThemeVariables({
+                  dark: true, // 开启暗黑模式
+                  compact: true, // 开启紧凑模式
+                }),
+                javascriptEnabled: true,
+              },
+            },
+          },
+        ],
       },
     ],
   },
