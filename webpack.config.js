@@ -1,6 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const StylelintWebpackPlugin = require('stylelint-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { getThemeVariables } = require('antd/dist/theme');
 
 module.exports = {
@@ -20,12 +22,12 @@ module.exports = {
         test: /\.css$/,
         // css-loader前者用于解析我们 import 的 css 文件（包括使用 @import 和 url() 引入的文件）
         // style-loader用于把解析后的样式直接插入到 dom 中，无需在 html 中引入 css 文件
-        use: ['style-loader', 'css-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
         test: /\.less$/,
         use: [
-          'style-loader',
+          MiniCssExtractPlugin.loader,
           'css-loader',
           {
             loader: 'less-loader',
@@ -43,7 +45,14 @@ module.exports = {
       },
       {
         test: /\.svg$/,
-        use: ['svg-sprite-loader'],
+        use: [
+          {
+            loader: 'svg-sprite-loader',
+            options: {
+              symbolId: 'icon-[name]', // 将图标名称作为导出的 id
+            },
+          },
+        ],
       },
     ],
   },
@@ -61,6 +70,8 @@ module.exports = {
       lintDirtyModulesOnly: true, // 仅检查变化的代码
       threads: true, // 多线程
     }),
+    new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin(),
   ],
   cache: {
     type: 'filesystem',

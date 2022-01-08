@@ -9,18 +9,20 @@
     "allowSyntheticDefaultImports": true, // 允许使用类似 import React from 'react' 的语法
     "moduleResolution": "node", // 指定模块解析器 node 允许直接 import node_modules 中的模块，并且允许解析目录
     "esModuleInterop": true,
-    /*
-      默认所有可见的“@types“包会在编译过程中被包含进来。 
-      node_modules/@types文件夹下以及它们子文件夹下的所有包都是可见的； 
-      也就是说， ./node_modules/@types/，../node_modules/@types/和../../node_modules/@types/等等。
-      如果指定了typeRoots，只有typeRoots下面的包才会被包含进来。
-      如果指定了types，只有被列出来的包才会被包含进来。
-    */
-    "typeRoots": ["node_modules/@types", "types"], // 指定类型文件的搜索目录
     "baseUrl": ".", // 指定编译的基础路径
     "paths": {
       "@/*": ["src/*"]
     } // 指定编译的基础路径
   },
-  "include": ["src/**/*", "types/**/*"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/types/**/*.d.ts",
+    "src/types/**/*.ts",
+    "build/**/*.ts",
+    "build/**/*.d.ts",
+    "mock/**/*.ts"
+  ],
+  "exclude": ["node_modules", "dist", "**/*.js"]
 }
