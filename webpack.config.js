@@ -41,6 +41,10 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.svg$/,
+        use: ['svg-sprite-loader'],
+      },
     ],
   },
   plugins: [
