@@ -34,14 +34,28 @@ module.exports = {
             options: {
               lessOptions: {
                 modifyVars: getThemeVariables({
-                  dark: true, // 开启暗黑模式
-                  compact: true, // 开启紧凑模式
+                  dark: false, // 开启暗黑模式
+                  compact: false, // 开启紧凑模式
                 }),
                 javascriptEnabled: true,
               },
             },
           },
         ],
+      },
+      {
+        test: /\.(jpe?g|png|gif)$/i,
+        type: 'asset',
+        generator: {
+          // 输出文件位置以及文件名
+          // [ext] 自带 "." 这个与 url-loader 配置不同
+          filename: '[name][hash:8][ext]',
+        },
+        parser: {
+          dataUrlCondition: {
+            maxSize: 50 * 1024, //超过50kb不转 base64
+          },
+        },
       },
       {
         test: /\.svg$/,
