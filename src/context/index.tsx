@@ -1,6 +1,15 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC, ReactNode, useState } from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { AuthProvider } from './auth-context';
 
 export const AppProviders: FC<{ children: ReactNode }> = ({ children }) => {
-  return <AuthProvider>{children}</AuthProvider>;
+  const queryClient = new QueryClient();
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
+      <AuthProvider>{children}</AuthProvider>
+    </QueryClientProvider>
+  );
 };

@@ -1,0 +1,23 @@
+.tp-pond {
+  display: flex;
+  height: calc(100% * 10 / 17);
+  min-width: calc(100% / 4);
+  padding: 0.7rem 0.7rem 1rem;
+  background-color: rgb(255 255 255);
+  border-radius: 6px;
+  flex-direction: column;
+
+  :nth-last-of-type(-n + 3) {
+    width: calc((100vw - 9.2rem) / 3);
+    height: calc((100vh - 4rem) * 7 / 17);
+  }
+
+  .tp-pond-container {
+    overflow: scroll;
+    flex: 1;
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}

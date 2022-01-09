@@ -1,12 +1,12 @@
 import React, { FC, useEffect, useMemo, useState, createContext, ReactNode } from 'react';
 import * as auth from '@/api/user';
 import { isExist, setToken, removeToken } from '@/utils/auth';
-import { User } from '@/types/user';
+import { IUser } from '@/types/user';
 
 interface IAuthContext {
   user: any;
-  login: (form: User) => void;
-  register: (form: User) => void;
+  login: (form: IUser) => void;
+  register: (form: IUser) => void;
   logout: () => void;
 }
 
@@ -17,7 +17,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const login = (form: User) => {
+  const login = (form: IUser) => {
     setIsLoading(true);
     auth
       .login(form)
@@ -39,7 +39,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
       });
   };
 
-  const register = (form: User) => {
+  const register = (form: IUser) => {
     setIsLoading(true);
     auth
       .register(form)

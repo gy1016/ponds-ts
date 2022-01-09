@@ -1,7 +1,7 @@
 import request from '@/utils/request';
-import { User } from '@/types/user';
+import { IUser } from '@/types/user';
 
-export function login(data: User) {
+export function login(data: IUser) {
   return request({
     url: '/user/login',
     method: 'post',
@@ -9,7 +9,7 @@ export function login(data: User) {
   });
 }
 
-export function register(data: User) {
+export function register(data: IUser) {
   return request({
     url: '/user/register',
     method: 'post',
