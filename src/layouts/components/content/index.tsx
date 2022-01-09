@@ -1,15 +1,18 @@
-import React, { FC } from 'react';
+import React, { FC, Suspense } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { Layout } from 'antd';
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
-import { Route, Routes } from 'react-router-dom';
+import Loading from '@/views/sys/loading';
+import { TpViewProps } from '@/types/global';
 
 interface TpContentProps {
   collapsed: boolean;
   toggle: () => void;
+  viewArr: Array<TpViewProps>;
 }
 
 const TpContent: FC<TpContentProps> = (props) => {
-  const { collapsed, toggle } = props;
+  const { collapsed, toggle, viewArr } = props;
   const { Header, Content } = Layout;
 
   return (
@@ -21,11 +24,14 @@ const TpContent: FC<TpContentProps> = (props) => {
         })}
       </Header>
       <Content className="app-layout-content">
-        <Routes>
-          <Route path="panel" element={<div>任务面板</div>} />
-          <Route path="analysis" element={<div>分析面板</div>} />
-          <Route path="*" element={<div>404</div>} />
-        </Routes>
+        <Suspense fallback={<Loading />}>
+          <Routes>
+            <Route path="/" element={<Navigate to="/task" />} />
+            {viewArr.map((view) => {
+              return <Route key={view.id} path={view.path} element={view.element} />;
+            })}
+          </Routes>
+        </Suspense>
       </Content>
     </Layout>
   );

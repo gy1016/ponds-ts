@@ -8,3 +8,10 @@ declare interface TpRouterProps {
   seniorId?: number; // 父级路由ID
   children?: Array<TpRouterProps>[]; // 子级路由
 }
+
+declare interface TpViewProps {
+  id: number; // 视图ID
+  path: string; // 对应路径
+  element: ReactNode; // 对应组件
+  lazy: boolean; // 是否懒加载
+}

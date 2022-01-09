@@ -3,7 +3,6 @@ import { Menu, Layout } from 'antd';
 import { Link } from 'react-router-dom';
 import { TpRouterProps } from '@/types/global';
 import logo from '@/assets/logo.svg';
-import { SnippetsOutlined, LineChartOutlined } from '@ant-design/icons';
 
 interface TpMenuProps {
   collapsed: boolean;
