@@ -14,4 +14,5 @@ declare interface TpViewProps {
   path: string; // 对应路径
   element: ReactNode; // 对应组件
   lazy: boolean; // 是否懒加载
+  default?: boolean; // 是否为默认视图
 }

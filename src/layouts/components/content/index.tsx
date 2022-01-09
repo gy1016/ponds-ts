@@ -14,6 +14,7 @@ interface TpContentProps {
 const TpContent: FC<TpContentProps> = (props) => {
   const { collapsed, toggle, viewArr } = props;
   const { Header, Content } = Layout;
+  const defaultView = viewArr.find((view) => view.default)?.path;
 
   return (
     <Layout className="auth-app-layout">
@@ -26,7 +27,7 @@ const TpContent: FC<TpContentProps> = (props) => {
       <Content className="app-layout-content">
         <Suspense fallback={<Loading />}>
           <Routes>
-            <Route path="/" element={<Navigate to="/task" />} />
+            <Route path="/" element={<Navigate to={`/${defaultView}`} />} />
             {viewArr.map((view) => {
               return <Route key={view.id} path={view.path} element={view.element} />;
             })}

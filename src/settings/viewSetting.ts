@@ -11,6 +11,7 @@ const TpViewArr: Array<TpViewProps> = [
     path: 'task',
     element: createElement(TaskPanel),
     lazy: false,
+    default: true,
   },
   {
     id: 2,
