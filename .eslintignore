@@ -6,6 +6,7 @@ webpack.config.js
 *.less
 *.html
 *.svg
+*.ico
 *.md
 src/assets
 src/App.tsx

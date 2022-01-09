@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { IUser } from '@/types/user';
+import { IForm } from '@/types/user';
 import useAuth from '@/hooks/useAuth';
 
 const Login: FC = () => {
@@ -11,7 +11,7 @@ const Login: FC = () => {
   const [password, setpassword] = useState(account ? JSON.parse(account).p : '');
   const { login } = useAuth();
 
-  const handleSubmit = (values: IUser) => {
+  const handleSubmit = (values: IForm) => {
     login(values);
   };
 

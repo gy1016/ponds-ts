@@ -4,12 +4,14 @@ const StylelintWebpackPlugin = require('stylelint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { getThemeVariables } = require('antd/dist/theme');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
+    // publicPath: './dist',
   },
   module: {
     rules: [
@@ -74,7 +76,14 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, './public/index.html'),
       filename: 'index.html',
+      inject: 'body', //js插入的位置，true/'head'/'body'/false
       title: 'TP-任务池',
+      favicon: './public/favicon.ico',
+      minify: {
+        //压缩HTML文件
+        removeComments: true, //移除HTML中的注释
+        collapseWhitespace: false, //删除空白符与换行符
+      },
     }),
     new StylelintWebpackPlugin({
       configFile: path.resolve(__dirname, './.stylelintrc.js'),
@@ -83,6 +92,9 @@ module.exports = {
       fix: true, // 自动格式化
       lintDirtyModulesOnly: true, // 仅检查变化的代码
       threads: true, // 多线程
+    }),
+    new CopyWebpackPlugin({
+      patterns: [{ from: path.resolve(__dirname, 'public/favicon.ico'), to: path.resolve(__dirname, 'dist') }],
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin(),

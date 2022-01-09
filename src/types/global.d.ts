@@ -16,3 +16,5 @@ declare interface TpViewProps {
   lazy: boolean; // 是否懒加载
   default?: boolean; // 是否为默认视图
 }
+
+declare type Recordable<T = any> = Record<string, T>;

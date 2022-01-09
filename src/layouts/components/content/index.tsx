@@ -18,7 +18,10 @@ const TpContent: FC<TpContentProps> = (props) => {
 
   return (
     <Layout className="auth-app-layout">
-      <Header className="app-layout-header" style={{ padding: 0 }}>
+      <Header
+        className="app-layout-header"
+        style={{ padding: 0, background: '#ffffff', boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)' }}
+      >
         {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
           className: 'trigger',
           onClick: toggle,

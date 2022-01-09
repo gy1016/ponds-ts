@@ -1,31 +1,31 @@
 import React, { FC, useEffect, useMemo, useState, createContext, ReactNode } from 'react';
 import * as auth from '@/api/user';
 import { isExist, setToken, removeToken } from '@/utils/auth';
-import { IUser } from '@/types/user';
+import { IForm, IUser } from '@/types/user';
 
 interface IAuthContext {
-  user: any;
-  login: (form: IUser) => void;
-  register: (form: IUser) => void;
+  user: IUser | null;
+  login: (form: IForm) => void;
+  register: (form: IForm) => void;
   logout: () => void;
 }
 
-export const AuthContext = createContext<IAuthContext | undefined>(undefined);
+export const AuthContext = createContext<IAuthContext | null>(null);
 AuthContext.displayName = 'AuthContext';
 
 export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<IUser | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const login = (form: IUser) => {
-    setIsLoading(true);
+  const login = (form: IForm) => {
+    setIsLoading(!isLoading);
     auth
       .login(form)
       .then((res) => {
         const user = res?.data;
         setToken(user.token);
         setUser(user);
-        setIsLoading(false);
+        setIsLoading(!isLoading);
         if (form.remember) {
           let info = JSON.stringify({ u: form.username, p: form.password });
           localStorage.setItem('account', info);
@@ -34,23 +34,23 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
         }
       })
       .catch((err) => {
-        setIsLoading(false);
+        setIsLoading(!isLoading);
         console.log(err, 'login响应拦截器返回的Promise.reject()被我抓到啦~');
       });
   };
 
-  const register = (form: IUser) => {
-    setIsLoading(true);
+  const register = (form: IForm) => {
+    setIsLoading(!isLoading);
     auth
       .register(form)
       .then((res) => {
         const user = res?.data;
         setToken(user.token);
         setUser(user);
-        setIsLoading(false);
+        setIsLoading(!isLoading);
       })
       .catch((err) => {
-        setIsLoading(false);
+        setIsLoading(!isLoading);
         console.log(err, 'register响应拦截器返回的Promise.reject()被我抓到啦~');
       });
   };

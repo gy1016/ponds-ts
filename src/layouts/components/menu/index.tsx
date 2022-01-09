@@ -22,6 +22,7 @@ const TpMenu: FC<TpMenuProps> = (props) => {
       collapsed={collapsed}
       width="150px"
       collapsedWidth="40px"
+      style={{ background: '#ffffff', boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)' }}
     >
       <div className="logo">
         <svg className="logo-svg" viewBox={logo.viewBox}>
@@ -29,7 +30,7 @@ const TpMenu: FC<TpMenuProps> = (props) => {
         </svg>
         <span>{!collapsed ? siteTitle : ''}</span>
       </div>
-      <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+      <Menu theme="light" mode="inline" defaultSelectedKeys={['1']}>
         {routerArr.map((router) => {
           return (
             <Menu.Item key={router.id} icon={router.icon}>
