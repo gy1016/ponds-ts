@@ -1,5 +1,5 @@
 import request from '@/utils/request';
-
+import { ITaskResult } from '@/types/task';
 interface SortProps {
   fromId: number;
   referenceId: number;
@@ -38,7 +38,7 @@ export function editTask(data: any) {
   });
 }
 
-export function getTask(id: number) {
+export function getTask(id: number | undefined) {
   return request({
     url: '/task/info',
     method: 'get',

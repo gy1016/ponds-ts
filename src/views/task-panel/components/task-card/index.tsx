@@ -5,6 +5,7 @@ import { ITaskResult } from '@/types/task';
 
 interface ITaskCardProps {
   task: ITaskResult;
+  toggleEditModal: (taskId: number) => void;
 }
 
 const importanceDesc = ['不重要', '不太重要', '重要', '有点重要', '非常重要！'];
@@ -18,7 +19,7 @@ const customIcons: any = {
 };
 
 const TaskCard: FC<ITaskCardProps> = (props) => {
-  const { task } = props;
+  const { task, toggleEditModal } = props;
   const starMap = (val: number) => {
     const m = [
       [0, -5],
@@ -37,7 +38,13 @@ const TaskCard: FC<ITaskCardProps> = (props) => {
   };
 
   return (
-    <Card size="small" style={{ marginBottom: '1rem', backgroundColor: '#F0F5FF' }}>
+    <Card
+      onClick={() => {
+        toggleEditModal(task.id);
+      }}
+      size="small"
+      style={{ marginBottom: '1rem', backgroundColor: '#F0F5FF', cursor: 'pointer' }}
+    >
       <div>{task.describe}</div>
       <div>
         <Rate

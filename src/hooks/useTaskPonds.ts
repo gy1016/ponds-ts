@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { getPondList } from '@/api/pond';
-import { getTaskList } from '@/api/task';
+import { getTaskList, addTask, editTask, getTask } from '@/api/task';
 import { ITaskResult, IPondResult } from '@/types/task';
 import { getHistoryList } from '@/api/history';
 
@@ -14,7 +14,25 @@ export const useTasks = (id: number | undefined) => {
   return res?.data as Array<ITaskResult>;
 };
 
+export const useOneTask = (id: number | undefined) => {
+  return useQuery(['task', id], () => getTask(id));
+};
+
 export const useDropHistory = (id: number | undefined) => {
   const { data: res } = useQuery(['histories'], () => getHistoryList(id));
   return res?.data;
+};
+
+export const useAddTask = (queryKey: string) => {
+  const queryClient = useQueryClient();
+  return useMutation(({ belong, userId, describe }: any) => addTask({ belong, userId, describe }), {
+    onSuccess: () => queryClient.invalidateQueries(queryKey),
+  });
+};
+
+export const useEditTask = (queryKey: string) => {
+  const queryClient = useQueryClient();
+  return useMutation((params) => editTask(params), {
+    onSuccess: () => queryClient.invalidateQueries(queryKey),
+  });
 };
