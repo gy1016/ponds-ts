@@ -10,4 +10,5 @@ export interface IUser {
   role: 'admin' | 'vistor';
   avatar: string;
   token?: string;
+  registerAt?: any;
 }
