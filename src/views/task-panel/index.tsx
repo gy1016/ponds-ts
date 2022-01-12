@@ -1,4 +1,6 @@
 import React, { FC, useState } from 'react';
+import { DragDropContext } from 'react-beautiful-dnd';
+import { Drag, Drop, DropChild } from '@/components/drag-and-drop';
 import Pond from './components/pond';
 import { useTasks, usePonds } from '@/hooks/useTaskPonds';
 import { IPondResult, ITaskResult } from '@/types/task';
@@ -19,17 +21,23 @@ const TaskPanel: FC = () => {
   };
 
   return (
-    <div className="task-panel">
-      {ponds?.map((p) => (
-        <Pond
-          key={p.id}
-          pondInfo={p}
-          taskList={tasks?.filter((t) => t.belong === p.id)}
-          toggleEditModal={toggleEditModal}
-        />
-      ))}
-      <EditTaskModal taskId={taskId} toggleEditModal={toggleEditModal} />
-    </div>
+    <DragDropContext onDragEnd={() => {}}>
+      <div className="task-panel">
+        <Drop type="COLUMN" direction="horizontal" droppableId="ponds-drop" isDropDisabled={false}>
+          <DropChild style={{ width: '100%', height: '100%', display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
+            {ponds?.map((p, idx) => (
+              <Pond
+                key={p.id}
+                pondInfo={p}
+                taskList={tasks?.filter((t) => t.belong === p.id)}
+                toggleEditModal={toggleEditModal}
+              />
+            ))}
+          </DropChild>
+        </Drop>
+        <EditTaskModal taskId={taskId} toggleEditModal={toggleEditModal} />
+      </div>
+    </DragDropContext>
   );
 };
 
