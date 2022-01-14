@@ -1,11 +1,12 @@
 import React, { FC, useState } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
-import { Drag, Drop, DropChild } from '@/components/drag-and-drop';
+import { Drop, DropChild } from '@/components/drag-and-drop';
 import Pond from './components/pond';
 import { useTasks, usePonds } from '@/hooks/useTaskPonds';
 import { IPondResult, ITaskResult } from '@/types/task';
 import useAuth from '@/hooks/useAuth';
 import EditTaskModal from './components/edit-task';
+import { useDragEnd } from '@/hooks/useDragEnd';
 import './index.less';
 
 const TaskPanel: FC = () => {
@@ -20,12 +21,14 @@ const TaskPanel: FC = () => {
     setIsEditVis(!isEditVis);
   };
 
+  const onDragEnd = useDragEnd();
+
   return (
-    <DragDropContext onDragEnd={() => {}}>
+    <DragDropContext onDragEnd={onDragEnd}>
       <div className="task-panel">
         <Drop type="COLUMN" direction="horizontal" droppableId="ponds-drop" isDropDisabled={false}>
           <DropChild style={{ width: '100%', height: '100%', display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
-            {ponds?.map((p, idx) => (
+            {ponds?.map((p) => (
               <Pond
                 key={p.id}
                 pondInfo={p}

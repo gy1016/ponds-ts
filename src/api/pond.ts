@@ -6,3 +6,11 @@ export function getPondList() {
     method: 'get',
   });
 }
+
+export function reorderPonds<T>(data: T) {
+  return request({
+    url: '/pond/reorder',
+    method: 'post',
+    data,
+  });
+}

@@ -1,12 +1,5 @@
 import request from '@/utils/request';
 import { ITaskResult } from '@/types/task';
-interface SortProps {
-  fromId: number;
-  referenceId: number;
-  type: 'before' | 'after';
-  fromPondId?: number;
-  toPondId?: number;
-}
 
 export function getPondList() {
   return request({
@@ -46,7 +39,7 @@ export function getTask(id: number | undefined) {
   });
 }
 
-export function reorderTasks(data: SortProps) {
+export function reorderTasks<T>(data: T) {
   return request({
     url: '/task/reorder',
     method: 'post',

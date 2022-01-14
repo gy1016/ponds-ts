@@ -25,7 +25,7 @@ const Login: FC = () => {
         >
           <Input
             prefix={<UserOutlined className="site-form-item-icon" />}
-            placeholder="体验用户: testuser"
+            placeholder="体验用户： taskponds"
             type="text"
             id="username"
             autoComplete="on"
@@ -41,7 +41,7 @@ const Login: FC = () => {
           <Input
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
-            placeholder="体验密码：testuser"
+            placeholder="体验密码：taskponds"
             id="password"
             autoComplete="on"
             allowClear

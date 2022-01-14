@@ -8,6 +8,7 @@ import useAuth from '@/hooks/useAuth';
 import TaskCard from '../task-card';
 import CreateTask from '../create-task';
 import './index.less';
+import { Drop, DropChild, Drag } from '@/components/drag-and-drop';
 
 interface IPondProps {
   pondInfo: IPondResult;
@@ -34,9 +35,17 @@ const Pond: FC<IPondProps> = React.forwardRef<HTMLDivElement, IPondProps>(
           <div className="pond-header-count">{`共计:${taskList?.length}条`}</div>
         </div>
         <div className="tp-pond-container">
-          {taskList?.map((t) => (
-            <TaskCard toggleEditModal={toggleEditModal} key={t.id} task={t} />
-          ))}
+          <Drop type="ROW" direction="vertical" droppableId={String(id)}>
+            <DropChild style={{ minHeight: '1rem' }}>
+              {taskList?.map((t, idx) => (
+                <Drag key={t.id} index={idx} draggableId={'drag' + t.id}>
+                  <div>
+                    <TaskCard toggleEditModal={toggleEditModal} key={t.id} task={t} />
+                  </div>
+                </Drag>
+              ))}
+            </DropChild>
+          </Drop>
         </div>
         <CreateTask belong={id} userId={user!.id} />
       </div>
