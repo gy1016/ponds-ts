@@ -27,7 +27,8 @@ const Pond: FC<IPondProps> = React.forwardRef<HTMLDivElement, IPondProps>(
       <div className={classes} ref={ref} {...props}>
         <div className="tp-pond-header">
           <span className="pond-header-emoji">
-            {`${EMO_JI_MAP[id]} ${nameCn + ' '}`}
+            {`${EMO_JI_MAP[id]} `}
+            <span className="pond-name">{nameCn + ' '}</span>
             <Tooltip placement="rightTop" title={desc}>
               <QuestionCircleOutlined />
             </Tooltip>
