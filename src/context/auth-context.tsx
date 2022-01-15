@@ -17,6 +17,17 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<IUser | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const me = () =>
+    auth
+      .me()
+      .then((res) => {
+        const user = res?.data;
+        setUser(user);
+      })
+      .catch((err) => {
+        console.log(err, 'me响应拦截器返回的Promise.reject()被我抓到啦~');
+      });
+
   const login = (form: IForm) => {
     setIsLoading(!isLoading);
     auth
@@ -59,6 +70,12 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
     removeToken();
     setUser(null);
   };
+
+  useEffect(() => {
+    if (isExist()) {
+      me();
+    }
+  }, []);
 
   return (
     <AuthContext.Provider value={useMemo(() => ({ user, login, register, logout }), [user, login, register, logout])}>
