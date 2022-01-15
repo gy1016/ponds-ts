@@ -9,6 +9,7 @@ export const AppProviders: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>{children}</AuthProvider>
+      <ReactQueryDevtools />
     </QueryClientProvider>
   );
 };

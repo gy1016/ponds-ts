@@ -8,7 +8,7 @@ export function getHistoryList(userId: number | undefined) {
   });
 }
 
-export function addHistory(data: any) {
+export function addHistory<T>(data: T) {
   return request({
     url: '/history/add',
     method: 'post',

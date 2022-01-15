@@ -1,17 +1,32 @@
 import useAuth from '@/hooks/useAuth';
-import { reorderPonds } from '@/api/pond';
 import { useReorderPond, useReorderTask } from './useTaskPonds';
 import { usePonds, useTasks } from '@/hooks/useTaskPonds';
 import { DropResult } from 'react-beautiful-dnd';
 import { useCallback } from 'react';
 import { addHistory } from '@/api/history';
+import { useMutation, useQueryClient } from 'react-query';
+
+interface IHistoryParam {
+  userId: number;
+  taskId: number;
+  fromId: number;
+  toId: number;
+}
+
+export const useAddDropHistory = (queryKey: string) => {
+  const queryClient = useQueryClient();
+  return useMutation((param: IHistoryParam) => addHistory(param), {
+    onSuccess: () => queryClient.invalidateQueries(queryKey),
+  });
+};
 
 export const useDragEnd = () => {
   const { user } = useAuth();
   const ponds = usePonds();
   const tasks = useTasks(user!.id);
   const { mutate: reorderPonds } = useReorderPond();
-  const { mutate: reorderTask } = useReorderTask();
+  const { mutate: reorderTask } = useReorderTask('tasks');
+  const { mutate: addHistory } = useAddDropHistory('histories');
 
   return useCallback(
     ({ source, destination, type }: DropResult) => {
@@ -33,12 +48,12 @@ export const useDragEnd = () => {
       if (type === 'ROW') {
         const fromPondId = Number(source.droppableId);
         const toPondId = Number(destination.droppableId);
-        console.log(source, destination);
-        console.log(source.index, destination.index);
+        // console.log(source, destination);
+        // console.log(source.index, destination.index);
         const fromTask = tasks.filter((task) => task.belong === fromPondId)[source.index];
         // toTask可能为空，因为toPond里面可能就没有任务
         const toTask = tasks.filter((task) => task.belong === toPondId)[destination.index];
-        console.log('fromPondId', fromPondId, 'toPondId', toPondId, 'fromTask', fromTask, 'toTask', toTask);
+        // console.log('fromPondId', fromPondId, 'toPondId', toPondId, 'fromTask', fromTask, 'toTask', toTask);
         if (fromPondId !== toPondId) {
           addHistory({
             userId: user!.id,

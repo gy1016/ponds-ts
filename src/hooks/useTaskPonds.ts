@@ -3,6 +3,7 @@ import { getPondList, reorderPonds } from '@/api/pond';
 import { getTaskList, addTask, editTask, getTask, reorderTasks } from '@/api/task';
 import { ITaskResult, IPondResult } from '@/types/task';
 import { getHistoryList } from '@/api/history';
+import { reorder } from '@/utils/taskpanel/reorder';
 
 export const usePonds = () => {
   const { data: res } = useQuery(['ponds'], () => getPondList());
@@ -58,8 +59,52 @@ interface ITaskSortProps {
   tag?: number;
 }
 
-export const useReorderTask = () => {
-  return useMutation((data: ITaskSortProps) => {
-    return reorderTasks<ITaskSortProps>(data);
+export const useReorderTask = (queryKey: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation((data: ITaskSortProps) => reorderTasks<ITaskSortProps>(data), {
+    // 查询成功后的回调
+    onSuccess: () => queryClient.invalidateQueries(queryKey),
+    async onMutate(target) {
+      // 得到react-query为我们保存的数据
+      const previousItems = queryClient.getQueryData(queryKey);
+      // 设置发送的请求返回前我们保存的数据
+      queryClient.setQueryData(queryKey, (old: any) => {
+        const { fromId, referenceId, fromPondId, toPondId, type, tag } = target;
+        const fromTask = old?.data.find((t: ITaskResult) => t.id === tag);
+        if (fromPondId !== toPondId) {
+          fromTask.belong = toPondId;
+          old?.data.forEach((t: ITaskResult) => {
+            if (t.belong === fromPondId && t.sort > fromTask.sort) {
+              t.sort -= 1;
+            } else if (t.belong === toPondId && t.sort > referenceId) {
+              t.sort += 1;
+            }
+          });
+        } else {
+          // fromId与referenceId是从0开始的，而我们的sort是从1开始的
+          if (type === 'after') {
+            old?.data.forEach((t: ITaskResult) => {
+              if (t.belong === fromPondId && t.sort > fromId + 1 && t.sort < referenceId + 2) {
+                t.sort -= 1;
+              }
+            });
+          } else {
+            old?.data.forEach((t: ITaskResult) => {
+              if (t.belong === fromPondId && t.sort > referenceId && t.sort < fromId + 1) {
+                t.sort += 1;
+              }
+            });
+          }
+        }
+        fromTask.sort = referenceId + 1;
+        old?.data.sort((a: ITaskResult, b: ITaskResult) => a.sort - b.sort);
+        return old;
+      });
+      return { previousItems };
+    },
+    onError(error, newItem, context) {
+      queryClient.setQueryData(queryKey, (context as { previousItems: any[] }).previousItems);
+    },
   });
 };
