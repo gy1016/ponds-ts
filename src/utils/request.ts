@@ -16,7 +16,6 @@ service.interceptors.request.use(
     return config;
   },
   (error) => {
-    // console.log(error);
     return Promise.reject(error);
   },
 );
@@ -24,6 +23,28 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response) => {
     const res = response.data;
+    if (res.code !== 0) {
+      message.error({
+        content: res.msg || 'Error',
+        duration: 5,
+      });
+
+      if (res.code === -2) {
+        // to re-login
+        message.warning({
+          content: res.msg || 'Token过期，请重新登陆！',
+          duration: 5,
+        });
+      }
+      return Promise.reject(new Error(res.msg || 'Error'));
+    } else {
+      if (res.msg?.search(/获取/) === -1) {
+        message.success({
+          content: res.msg || '成功啦！',
+          duration: 5,
+        });
+      }
+    }
     return res;
   },
   (error) => {

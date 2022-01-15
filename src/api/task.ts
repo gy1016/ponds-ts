@@ -8,6 +8,7 @@ export function getPondList() {
   });
 }
 export function getTaskList(userId: number | undefined) {
+  if (!userId) return;
   return request({
     url: '/task/list',
     method: 'get',
@@ -32,10 +33,19 @@ export function editTask(data: any) {
 }
 
 export function getTask(id: number | undefined) {
+  if (!id) return;
   return request({
     url: '/task/info',
     method: 'get',
     params: { id },
+  });
+}
+
+export function delTask(params: { id: number; sort: number }) {
+  return request({
+    url: '/task/delete',
+    method: 'get',
+    params,
   });
 }
 

@@ -1,9 +1,23 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { getPondList, reorderPonds } from '@/api/pond';
-import { getTaskList, addTask, editTask, getTask, reorderTasks } from '@/api/task';
+import { getTaskList, addTask, editTask, getTask, reorderTasks, delTask } from '@/api/task';
 import { ITaskResult, IPondResult } from '@/types/task';
 import { getHistoryList } from '@/api/history';
-import { reorder } from '@/utils/taskpanel/reorder';
+
+export interface IPondSortProps {
+  fromId: number; // 要重新排序的item
+  referenceId: number; // 目标item
+  type: 'before' | 'after'; // 放在目标item的前还是后
+}
+
+interface ITaskSortProps {
+  fromId: number;
+  referenceId: number;
+  type: 'before' | 'after';
+  fromPondId?: number;
+  toPondId?: number;
+  tag?: number;
+}
 
 export const usePonds = () => {
   const { data: res } = useQuery(['ponds'], () => getPondList());
@@ -38,26 +52,18 @@ export const useEditTask = (queryKey: string) => {
   });
 };
 
-export interface IPondSortProps {
-  fromId: number; // 要重新排序的item
-  referenceId: number; // 目标item
-  type: 'before' | 'after'; // 放在目标item的前还是后
-}
+export const useDelTask = (queryKey: string) => {
+  const queryClient = useQueryClient();
+  return useMutation((params: { id: number; sort: number }) => delTask(params), {
+    onSuccess: () => queryClient.invalidateQueries(queryKey),
+  });
+};
 
 export const useReorderPond = () => {
   return useMutation((data: IPondSortProps) => {
     return reorderPonds<IPondSortProps>(data);
   });
 };
-
-interface ITaskSortProps {
-  fromId: number;
-  referenceId: number;
-  type: 'before' | 'after';
-  fromPondId?: number;
-  toPondId?: number;
-  tag?: number;
-}
 
 export const useReorderTask = (queryKey: string) => {
   const queryClient = useQueryClient();

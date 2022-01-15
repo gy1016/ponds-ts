@@ -1,6 +1,6 @@
 import React, { FC, ReactNode, useState } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
+// import { ReactQueryDevtools } from 'react-query/devtools';
 import { AuthProvider } from './auth-context';
 
 export const AppProviders: FC<{ children: ReactNode }> = ({ children }) => {
@@ -9,7 +9,7 @@ export const AppProviders: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>{children}</AuthProvider>
-      <ReactQueryDevtools />
+      {/* <ReactQueryDevtools /> */}
     </QueryClientProvider>
   );
 };

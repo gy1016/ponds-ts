@@ -6,9 +6,9 @@ import TaskTraceCard from './components/task-trace-card';
 import StatisticsCard from './components/statistics-card';
 import CalenderCard from './components/calender-card';
 import TaskDoneCount from './components/task-done-count';
-import './index.less';
 import Quadrant from './components/quadrant';
 import AllPoolCount from './components/all-pond-count';
+import './index.less';
 
 const AnalysisPanel: FC = () => {
   const { user } = useAuth();
@@ -32,13 +32,12 @@ const AnalysisPanel: FC = () => {
   };
 
   const [executePerDayAvg, setExecutePerDayAvg] = useState(0);
-  // const [finishPerWeekAvg, setFinishPerWeekAvg] = useState(0);
   const [numberOfExecutingDays, setNumberOfExecutingDays] = useState(0);
   const [accumulatedFinished, setAccumulatedFinished] = useState(0);
   const [heatmapValues, setHeatmapValues] = useState<Array<any>>([]);
   const [allHistoryValues, setAllHistoryValues] = useState<Array<any>>([]);
-
   const [chartsSubContainerHeight, setChartsSubContainerHeight] = useState(0);
+
   const chartsContainer = useCallback((node) => {
     if (node) {
       // 内容区减去中间gap的高度的一半
@@ -50,7 +49,6 @@ const AnalysisPanel: FC = () => {
   useEffect(() => {
     analysis.history = history;
     setExecutePerDayAvg(analysis.executePerDayAvg());
-    // setFinishPerWeekAvg(analysis.finishPerWeekAvg());
     setNumberOfExecutingDays(analysis.numberOfExecutingDays());
     setAccumulatedFinished(analysis.accumulatedFinished());
     setHeatmapValues(analysis.getHeatmapValuesFrom(valueLastMonthDate));

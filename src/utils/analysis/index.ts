@@ -73,22 +73,20 @@ class AlalysisUtil implements IAlalysis {
   public getHeatmapValuesFrom(date: any) {
     const { history } = this;
     const curDate = new Date();
-    const value = new Map<any, any>();
+    const value: any = {};
 
     // eslint-disable-next-line no-unmodified-loop-condition
     for (const time = new Date(date); time <= curDate; time.setDate(time.getDate() + 1)) {
       const timeStr = time.toISOString().slice(0, 10);
-      value.set(timeStr, {
+      value[timeStr] = {
         count: 0,
-      });
+      };
     }
 
     history.forEach(({ dropTime: d }) => {
       if (new Date(d) >= date) {
         const dropDate = d.slice(0, 10);
-        value.set(dropDate, {
-          count: (value.get(dropDate) as any).count + 1,
-        });
+        value[dropDate].count += 1;
       }
     });
 
@@ -97,7 +95,7 @@ class AlalysisUtil implements IAlalysis {
       if (Object.prototype.hasOwnProperty.call(value, date)) {
         res.push({
           date: date,
-          count: value.get(date)?.count,
+          count: value[date].count,
         });
       }
     }

@@ -1,7 +1,9 @@
-import React, { FC } from 'react';
+import React, { BaseSyntheticEvent, FC, useRef, useState } from 'react';
 import { Card, Rate } from 'antd';
-import { FrownOutlined, MehOutlined, SmileOutlined } from '@ant-design/icons';
+import { FrownOutlined, MehOutlined, SmileOutlined, DeleteOutlined } from '@ant-design/icons';
 import { ITaskResult } from '@/types/task';
+import { useDelTask } from '@/hooks/useTaskPonds';
+import './index.less';
 
 interface ITaskCardProps {
   task: ITaskResult;
@@ -36,14 +38,27 @@ const TaskCard: FC<ITaskCardProps> = (props) => {
     ];
     return (m.find((item) => item[1] === val) as any)[0];
   };
+  const del = useRef<HTMLDivElement>(null);
+  const { mutateAsync: delTask } = useDelTask('tasks');
+
+  const handleDel = (e: BaseSyntheticEvent) => {
+    e.stopPropagation();
+    delTask({ id: task.id, sort: task.sort });
+  };
 
   return (
     <Card
       onClick={() => {
         toggleEditModal(task.id);
       }}
+      onMouseEnter={() => {
+        (del.current as HTMLDivElement).style.width = '8rem';
+      }}
+      onMouseLeave={() => {
+        (del.current as HTMLDivElement).style.width = '0';
+      }}
       size="small"
-      style={{ marginBottom: '1rem', backgroundColor: '#F0F5FF', cursor: 'pointer' }}
+      style={{ marginBottom: '1rem', backgroundColor: '#F0F5FF', cursor: 'pointer', position: 'relative' }}
     >
       <div>{task.describe}</div>
       <div>
@@ -62,6 +77,9 @@ const TaskCard: FC<ITaskCardProps> = (props) => {
           character={({ index }: { index: number }) => customIcons[index + 1]}
           style={{ fontSize: '1rem' }}
         />
+      </div>
+      <div className="tp-del" ref={del} onClick={(e) => handleDel(e)}>
+        删除
       </div>
     </Card>
   );
