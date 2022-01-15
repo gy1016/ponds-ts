@@ -14,7 +14,6 @@ _✨ Author: gy1016 | Saltro | Jiyueyue ✨_
     <img src="https://img.shields.io/badge/Github-TaskPonds_backend-brightgreen?logo=github" alt="backend_repository">
   </a>
   <br />
-  <img src="https://img.shields.io/github/workflow/status/gy1016/ponds-ts/TaskPonds-frontend%20CI" alt="CI">
   <img alt="GitHub package.json version" src="https://img.shields.io/github/package-json/v/gy1016/ponds-ts">
   <a href="stargazers">
     <img src="https://img.shields.io/github/stars/gy1016/ponds-ts?color=yellow&label=Github%20Stars" alt="star">
@@ -46,20 +45,20 @@ TaskPonds -「Task Pool 是一个任务计划状态管理工具，由「💡 计
 
 ### 系统功能展示
 
-1. 登陆注册
+#### 登陆注册
 
 系统使用了JWT进行登陆管理与权限校验，刷新页面自动读取本地Token进行用户登录。
 
 ![登陆界面](https://s4.ax1x.com/2022/01/15/7YMnUg.png)
 
 
-2. 任务面板
+#### 任务面板
 
 任务面板借助react-beautiful-dnd实现了任务在不同池子中的拖拽，并通过react-query实现了在拖拽过程中的乐观更新。可以新加任务，并对任务进行编辑删除操作，在此过程当中还会记录任务的操作流程，为分析面板提供数据支撑。
 
 ![任务面板](https://s4.ax1x.com/2022/01/15/7YFNL9.gif)
 
-3. 分析面板
+#### 分析面板
 
 提供任务搜索，并对任务进行溯源分析；统计系统使用天数，计算任务完成度，鼓励我们形成正反馈。提供日历图展示每日操作次数；提供任务分布现象图，将任务按照时间与重要程度两个属性绘制在二维坐标面中，方便我们一眼就可以看出任务间孰轻孰重！
 
