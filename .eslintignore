@@ -11,3 +11,4 @@ webpack.config.js
 src/assets
 src/App.tsx
 yarn.lock
+build
