@@ -35,7 +35,7 @@ const TpContent: FC<TpContentProps> = (props) => {
       <Content className="app-layout-content">
         <Suspense fallback={<Loading />}>
           <Routes>
-            <Route path="/" element={<Navigate to={`/${defaultView}`} />} />
+            <Route path="/taskponds" element={<Navigate to={`/${defaultView}`} />} />
             {viewArr.map((view) => {
               return <Route key={view.id} path={view.path} element={view.element} />;
             })}

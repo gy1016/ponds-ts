@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { HashRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { AppProviders } from '@/context';
 import App from './App';
 import 'antd/dist/antd.less';
 
 ReactDOM.render(
-  <HashRouter>
+  <BrowserRouter>
     <AppProviders>
       <App />
     </AppProviders>
-  </HashRouter>,
+  </BrowserRouter>,
   document.getElementById('root'),
 );

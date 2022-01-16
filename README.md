@@ -83,6 +83,68 @@ UI 由团队成员 `Jiyueyue` 使用 Figma 软件，结合作品主题，选用�
 
 ![前端仓库](https://s4.ax1x.com/2022/01/15/7YEKZd.png)
 
+#### 实现了路由与视图的配置抽离
+
+> src/settings/routerSetting.ts
+
+```ts
+import { createElement } from 'react';
+import { TpRouterProps } from '@/types/global';
+import { SnippetsOutlined, LineChartOutlined } from '@ant-design/icons';
+
+const TpRouterArr: Array<TpRouterProps> = [
+  {
+    id: 1,
+    label: '面板',
+    path: 'taskponds/task',
+    icon: createElement(SnippetsOutlined),
+  },
+  {
+    id: 2,
+    label: '分析',
+    path: 'taskponds/analysis',
+    icon: createElement(LineChartOutlined),
+  },
+];
+
+export default TpRouterArr;
+```
+
+> src/settings/viewSetting.ts
+
+```ts
+import { createElement, lazy } from 'react';
+import { TpViewProps } from '@/types/global';
+import TaskPanel from '@/views/task-panel';
+
+const AnalysisPanel = lazy(() => import(/* webpackChunkName: "analysis" */ '@/views/analysis-panel'));
+const ErrorPage = lazy(() => import(/* webpackChunkName: "error" */ '@/views/sys/error'));
+
+const TpViewArr: Array<TpViewProps> = [
+  {
+    id: 1,
+    path: 'taskponds/task',
+    element: createElement(TaskPanel),
+    lazy: false,
+    default: true,
+  },
+  {
+    id: 2,
+    path: 'taskponds/analysis',
+    element: createElement(AnalysisPanel),
+    lazy: true,
+  },
+  {
+    id: 99,
+    path: '*',
+    element: createElement(ErrorPage),
+    lazy: true,
+  },
+];
+
+export default TpViewArr;
+```
+
 ### 后端
 
 - API 地址：[121.199.160.202:5000/api/pond](http://121.199.160.202:5000/api/pond)
