@@ -3,20 +3,27 @@ import { TpViewProps } from '@/types/global';
 import TaskPanel from '@/views/task-panel';
 
 const AnalysisPanel = lazy(() => import(/* webpackChunkName: "analysis" */ '@/views/analysis-panel'));
+const TodayPanel = lazy(() => import(/* webpackChunkName: "todayPanel" */ '@/views/today-panel'));
 const ErrorPage = lazy(() => import(/* webpackChunkName: "error" */ '@/views/sys/error'));
 
 const TpViewArr: Array<TpViewProps> = [
   {
     id: 1,
-    path: 'taskponds/task',
+    path: 'task',
     element: createElement(TaskPanel),
     lazy: false,
     default: true,
   },
   {
     id: 2,
-    path: 'taskponds/analysis',
+    path: 'analysis',
     element: createElement(AnalysisPanel),
+    lazy: true,
+  },
+  {
+    id: 3,
+    path: 'today',
+    element: createElement(TodayPanel),
     lazy: true,
   },
   {
