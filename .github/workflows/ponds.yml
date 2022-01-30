@@ -41,4 +41,5 @@ jobs:
           local: './dist/*'
           remote: /www/wwwroot/projects/taskponds/
           scp: |
+            rm -rf /www/wwwroot/projects/taskponds/
             ./dist/* => "/www/wwwroot/projects/taskponds/"
