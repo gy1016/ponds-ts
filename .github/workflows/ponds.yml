@@ -37,7 +37,7 @@ jobs:
         with:
           host: ${{ secrets.DR_HOST }}
           user: ${{ secrets.DR_USER }}
-          pass: ${{ secrets.DC_PASS }}
+          key: ${{ secrets.DC_KEY }}
           connect_timeout: 10s
           local: './dist/*'
           remote: /www/wwwroot/projects/taskponds/
