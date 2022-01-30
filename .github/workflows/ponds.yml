@@ -40,4 +40,6 @@ jobs:
           key: ${{ secrets.DC_KEY }}
           connect_timeout: 10s
           local: './dist/*'
-          remote: /www/wwwroot/projects/taskponds
+          remote: /www/wwwroot/projects/taskponds/
+          scp: |
+            ./dist/* => "/www/wwwroot/projects/taskponds/"
