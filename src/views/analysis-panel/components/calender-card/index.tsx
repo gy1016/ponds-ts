@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import 'react-calendar-heatmap/dist/styles.css';
-import Popover from '../Popover';
+import Popover from '../popover';
 import './index.less';
 
 interface ICalenderProps {
