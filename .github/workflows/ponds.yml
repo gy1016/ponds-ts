@@ -29,11 +29,16 @@ jobs:
     steps:
       - name: Deploy
         # 使用github action提供的action
-        uses: wlixcc/SFTP-Deploy-Action@v1.0
+        uses: cross-the-world/scp-pipeline@master
+        env:
+          WELCOME: "ssh scp ssh pipelines"
+          LASTSSH: "Doing something after copying"
         with:
-          username: ${{ secrets.DR_USER }}
-          server: ${{ secrets.DR_HOST }}
-          ssh_private_key: ${{ secrets.DR_KEY }}
-          local_path: './dist/*'
-          remote_path: /www/wwwroot/projects/taskponds
-          args: '-o ConnectTimeout=5'
+          host: ${{ secrets.DR_HOST }}
+          user: ${{ secrets.DR_USER }}
+          key: ${{ secrets.DR_KEY }}
+          connect_timeout: 10s
+          local: './dist/*'
+          remote: /www/wwwroot/projects/taskponds/
+          scp: |
+            ./dist/* => "/www/wwwroot/projects/taskponds/"
