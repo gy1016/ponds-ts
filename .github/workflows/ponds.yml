@@ -7,8 +7,8 @@ on:
       - master
 # 开始任务
 jobs:
-# 建立一个名为build的job
-  build:
+# 建立一个名为build-and-deploy的job
+  build-and-deploy:
     # 在最新的乌班图环境进行工作
     runs-on: ubuntu-latest
     # 开始设置构建步骤
@@ -21,12 +21,6 @@ jobs:
         run: |
           npm install --legacy-peer-deps
           npm run build --if-present
-  deploy:
-    runs-on: ubuntu-latest
-    # 需要build完成才能deploy
-    needs:
-      - build
-    steps:
       - name: Deploy
         # 使用github action提供的action
         uses: cross-the-world/ssh-scp-ssh-pipelines@latest
