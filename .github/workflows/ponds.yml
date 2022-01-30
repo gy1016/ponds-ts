@@ -21,6 +21,7 @@ jobs:
         run: |
           npm install --legacy-peer-deps
           npm run build --if-present
+          tar -czvf dist.tar dist
       - name: Deploy
         # 使用github action提供的action
         uses: cross-the-world/ssh-scp-ssh-pipelines@latest
@@ -33,10 +34,10 @@ jobs:
           key: ${{ secrets.DR_KEY }}
           connect_timeout: 10s
           first_ssh: |
-            ls
             rm -rf /www/wwwroot/projects/taskponds
             mkdir -p /www/wwwroot/projects/taskponds
           scp: |
             ./dist/* => /www/wwwroot/projects/taskponds
           last_ssh: |
-            ls
+            cd /www/wwwroot/projects/taskponds
+            tar -xzvf dist.tar
