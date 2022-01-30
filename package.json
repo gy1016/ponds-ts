@@ -1,7 +1,8 @@
 {
   "name": "ponds-ts",
   "version": "1.0.0",
-  "description": "",
+  "description": "七大池子任务管理系统",
+  "homepage": "https://github.com/gy1016/ponds-ts",
   "main": "src/index.tsx",
   "scripts": {
     "dev": "webpack serve --config ./build/webpack.dev.config.js",
