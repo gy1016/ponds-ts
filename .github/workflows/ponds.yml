@@ -21,6 +21,8 @@ jobs:
         run: |
           npm install --legacy-peer-deps
           npm run build --if-present
+          ls
+          ll
 
   deploy:
     runs-on: ubuntu-latest
@@ -30,16 +32,11 @@ jobs:
     steps:
       - name: Deploy
         # 使用github action提供的action
-        uses: cross-the-world/scp-pipeline@master
-        env:
-          WELCOME: "ssh scp ssh pipelines"
-          LASTSSH: "Doing something after copying"
+        uses: wlixcc/SFTP-Deploy-Action@v1.0
         with:
-          host: ${{ secrets.DR_HOST }}
-          user: ${{ secrets.DR_USER }}
-          key: ${{ secrets.DR_KEY }}
-          connect_timeout: 10s
-          local: './dist/*'
-          remote: /www/wwwroot/projects/taskponds/
-          scp: |
-            ./dist/* => "/www/wwwroot/projects/taskponds/"
+          username: ${{ secrets.DR_USER }}
+          server: ${{ secrets.DR_HOST }}
+          ssh_private_key: ${{ secrets.DR_KEY }}
+          local_path: './dist/*'
+          remote_path: /www/wwwroot/projects/taskponds
+          args: '-o ConnectTimeout=5'
