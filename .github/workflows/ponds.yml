@@ -21,9 +21,6 @@ jobs:
         run: |
           npm install --legacy-peer-deps
           npm run build --if-present
-          ls
-          ll
-
   deploy:
     runs-on: ubuntu-latest
     # 需要build完成才能deploy
