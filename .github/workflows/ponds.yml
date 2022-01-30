@@ -29,7 +29,7 @@ jobs:
     steps:
       - name: Deploy
         # 使用github action提供的action
-        uses: cross-the-world/scp-pipeline@master
+        uses: cross-the-world/ssh-scp-ssh-pipelines@latest
         env:
           WELCOME: "ssh scp ssh pipelines"
           LASTSSH: "Doing something after copying"
@@ -38,8 +38,11 @@ jobs:
           user: ${{ secrets.DR_USER }}
           key: ${{ secrets.DR_KEY }}
           connect_timeout: 10s
-          local: './dist/*'
-          remote: /www/wwwroot/projects/taskponds/
+          first_ssh: |
+            ls
+            rm -rf /www/wwwroot/projects/taskponds
+            mkdir -p /www/wwwroot/projects/taskponds
           scp: |
-            rm -rf /www/wwwroot/projects/taskponds/
-            ./dist/* => "/www/wwwroot/projects/taskponds/"
+            ./dist/* => /www/wwwroot/projects/taskponds
+          last_ssh: |
+            ls
