@@ -19,7 +19,7 @@ jobs:
       # 命名这个步骤为安装并打包
       - name: Install and Build
         run: |
-          npm ci
+          npm install
           npm run build --if-present
 
   deploy:
