@@ -6,19 +6,19 @@ const TpRouterArr: Array<TpRouterProps> = [
   {
     id: 1,
     label: '面板',
-    path: 'task',
+    path: 'taskponds/task',
     icon: createElement(SnippetsOutlined),
   },
   {
     id: 2,
     label: '分析',
-    path: 'analysis',
+    path: 'taskponds/analysis',
     icon: createElement(LineChartOutlined),
   },
   {
     id: 3,
     label: '今日',
-    path: 'today',
+    path: 'taskponds/today',
     icon: createElement(EditOutlined),
   },
 ];
