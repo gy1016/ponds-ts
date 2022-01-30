@@ -9,20 +9,20 @@ const ErrorPage = lazy(() => import(/* webpackChunkName: "error" */ '@/views/sys
 const TpViewArr: Array<TpViewProps> = [
   {
     id: 1,
-    path: 'task',
+    path: 'taskponds/task',
     element: createElement(TaskPanel),
     lazy: false,
     default: true,
   },
   {
     id: 2,
-    path: 'analysis',
+    path: 'taskponds/analysis',
     element: createElement(AnalysisPanel),
     lazy: true,
   },
   {
     id: 3,
-    path: 'today',
+    path: 'taskponds/today',
     element: createElement(TodayPanel),
     lazy: true,
   },
