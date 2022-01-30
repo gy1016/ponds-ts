@@ -13,3 +13,4 @@ src/App.tsx
 yarn.lock
 build
 postcss.config.js
+.github

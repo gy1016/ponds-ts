@@ -1,0 +1,43 @@
+# 建立一个名为ponds的工作流
+name: ponds
+# 监听master上的push事件
+on: 
+  push: 
+    branches: 
+      - master
+# 开始任务
+jobs:
+# 建立一个名为build的job
+  build:
+    # 在最新的乌班图环境进行工作
+    runs-on: ubuntu-latest
+    # 开始设置构建步骤
+    steps:
+      - name: Checkout
+      # 这是github官方的一个action，用于clone该仓库的源码到工作流中
+        uses: actions/checkout@v2
+      # 命名这个步骤为安装并打包
+      - name: Install and Build
+        run: |
+          npm ci
+          npm run build --if-present
+
+  deploy:
+    runs-on: ubuntu-latest
+    # 需要build完成才能deploy
+    needs:
+      - build
+    steps:
+      - name: Deploy
+        # 使用github action提供的action
+        uses: cross-the-world/scp-pipeline@master
+        env:
+          WELCOME: "ssh scp ssh pipelines"
+          LASTSSH: "Doing something after copying"
+        with:
+          host: ${{ secrets.DR_HOST }}
+          user: ${{ secrets.DR_USER }}
+          key: ${{ secrets.DC_KEY }}
+          connect_timeout: 10s
+          local: './dist/*'
+          remote: /www/wwwroot/projects/taskponds
