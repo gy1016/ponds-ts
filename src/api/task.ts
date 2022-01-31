@@ -1,4 +1,4 @@
-import request from '@/utils/request';
+import request from '@/utils/server';
 import { ITaskResult } from '@/types/task';
 
 export function getPondList() {
