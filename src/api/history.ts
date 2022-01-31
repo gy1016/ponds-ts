@@ -1,4 +1,4 @@
-import request from '../utils/request';
+import request from '@/utils/server';
 
 export function getHistoryList(userId: number | undefined) {
   return request({

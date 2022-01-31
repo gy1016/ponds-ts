@@ -1,13 +1,14 @@
 import axios, { AxiosRequestHeaders } from 'axios';
+import { isExist, getToken } from '../auth';
 import { message } from 'antd';
-import { isExist, getToken } from './auth';
+import { BASE_URL, TIMEOUT } from './config';
 
-const service = axios.create({
-  baseURL: 'http://121.199.160.202:5000/api',
-  timeout: 5000,
+const instance = axios.create({
+  baseURL: BASE_URL,
+  timeout: TIMEOUT,
 });
 
-service.interceptors.request.use(
+instance.interceptors.request.use(
   (config) => {
     // 如果存在 token 则附带在 http header 中
     if (isExist()) {
@@ -15,12 +16,12 @@ service.interceptors.request.use(
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
+  (err) => {
+    return Promise.reject(err);
   },
 );
 
-service.interceptors.response.use(
+instance.interceptors.response.use(
   (response) => {
     const res = response.data;
     if (res.code !== 0) {
@@ -56,4 +57,4 @@ service.interceptors.response.use(
   },
 );
 
-export default service;
+export default instance;

@@ -1,4 +1,4 @@
-import request from '@/utils/request';
+import request from '@/utils/server';
 import { IForm } from '@/types/user';
 
 export function login(data: IForm) {
