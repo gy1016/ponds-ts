@@ -2,9 +2,16 @@ import { createElement, lazy } from 'react';
 import { TpViewProps } from '@/types/global';
 import TaskPanel from '@/views/task-panel';
 
-const AnalysisPanel = lazy(() => import(/* webpackChunkName: "analysis" */ '@/views/analysis-panel'));
-const TodayPanel = lazy(() => import(/* webpackChunkName: "todayPanel" */ '@/views/today-panel'));
-const ErrorPage = lazy(() => import(/* webpackChunkName: "error" */ '@/views/sys/error'));
+const AnalysisPanel = lazy(
+  () => import(/* webpackChunkName: "analysis", webpackPrefetch: true */ '@/views/analysis-panel'),
+);
+const TodayPanel = lazy(
+  () => import(/* webpackChunkName: "todayPanel", webpackPrefetch: true */ '@/views/today-panel'),
+);
+const SourcePanel = lazy(
+  () => import(/* webpackChunkName: "SourcePanel", webpackPrefetch: true */ '@/views/source-panel'),
+);
+const ErrorPage = lazy(() => import(/* webpackChunkName: "error", webpackPrefetch: true */ '@/views/sys/error'));
 
 const TpViewArr: Array<TpViewProps> = [
   {
@@ -24,6 +31,12 @@ const TpViewArr: Array<TpViewProps> = [
     id: 3,
     path: 'today',
     element: createElement(TodayPanel),
+    lazy: true,
+  },
+  {
+    id: 4,
+    path: 'source',
+    element: createElement(SourcePanel),
     lazy: true,
   },
   {

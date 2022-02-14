@@ -16,9 +16,24 @@ module.exports = {
         test: /\.tsx?$/,
         use: [
           {
+            loader: 'babel-loader',
+            options: {
+              plugins: [
+                [
+                  'import',
+                  {
+                    libraryName: 'antd',
+                    libraryDirectory: 'es',
+                    style: true,
+                  },
+                ],
+              ],
+            },
+          },
+          {
             loader: 'ts-loader',
             options: {
-              transpileOnly: true,
+              // transpileOnly: true,
             },
           },
         ],
