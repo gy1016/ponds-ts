@@ -2,6 +2,7 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { getThemeVariables } = require('antd/dist/theme');
+const { IgnorePlugin } = require('webpack');
 
 module.exports = {
   entry: './src/index.tsx',
@@ -108,6 +109,11 @@ module.exports = {
       title: 'TP-任务池',
       inject: 'body',
       favicon: './public/favicon.ico',
+    }),
+    // Ignore all locale files of moment.js
+    new IgnorePlugin({
+      contextRegExp: /moment$/,
+      resourceRegExp: /^\.\/locale$/,
     }),
   ],
   cache: {
