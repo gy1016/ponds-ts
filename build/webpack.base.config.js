@@ -133,6 +133,18 @@ module.exports = {
           name: 'vendors',
           chunks: 'all',
         },
+        antv: {
+          name: 'antv', // split elementUI into a single package
+          priority: 20, // the weight needs to be larger than libs and app or it will be packaged into libs or app
+          reuseExistingChunk: true,
+          test: /[\\/]node_modules[\\/]_?@antv(.*)/, // in order to adapt to cnpm
+        },
+        three: {
+          name: 'three', // split elementUI into a single package
+          priority: 20, // the weight needs to be larger than libs and app or it will be packaged into libs or app
+          reuseExistingChunk: true,
+          test: /[\\/]node_modules[\\/]_?three(.*)/, // in order to adapt to cnpm
+        },
       },
     },
   },

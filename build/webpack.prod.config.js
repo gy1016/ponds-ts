@@ -36,12 +36,13 @@ module.exports = merge(base, {
   },
   externalsType: 'script',
   externals: {
-    react: ['https://cdn.bootcdn.net/ajax/libs/react/17.0.2/umd/react.production.min.js', 'React'],
-    'react-dom': ['https://cdn.bootcdn.net/ajax/libs/react-dom/17.0.2/umd/react-dom.production.min.js', 'ReactDOM'],
-    'react-router-dom': [
-      'https://cdn.jsdelivr.net/npm/react-router-dom@6.0.2/umd/react-router-dom.production.min.js',
-      'ReactRouterDOM',
-    ],
+    // react: ['https://cdn.bootcdn.net/ajax/libs/react/17.0.2/umd/react.production.min.js', 'React'],
+    // history: ['https://cdn.jsdelivr.net/npm/history@5.1.0/umd/history.production.min.js', 'history'],
+    // 'react-dom': ['https://cdn.bootcdn.net/ajax/libs/react-dom/17.0.2/umd/react-dom.production.min.js', 'ReactDOM'],
+    // 'react-router-dom': [
+    //   'https://cdn.jsdelivr.net/npm/react-router-dom@6.0.2/umd/react-router-dom.production.min.js',
+    //   'ReactRouterDOM',
+    // ],
     axios: ['https://cdn.jsdelivr.net/npm/axios@0.24.0/dist/axios.min.js', 'axios'],
   },
   performance: {
