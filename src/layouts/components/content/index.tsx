@@ -26,6 +26,7 @@ const TpContent: FC<TpContentProps> = (props) => {
             {viewArr.map((view) => {
               return <Route key={view.id} path={view.path} element={view.element} />;
             })}
+            <Route path="/taskponds" element={<Navigate to={`/${defaultView}`} />} />
             <Route path="*" element={<Navigate to={`/${defaultView}`} />} />
           </Routes>
         </Suspense>
