@@ -65,7 +65,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.(jpe?g|png|gif)$/i,
+        test: /\.(jpe?g|png|gif|svg)$/i,
         type: 'asset',
         generator: {
           filename: 'images/[name][contenthash:8][ext]',
@@ -75,6 +75,7 @@ module.exports = {
             maxSize: 50 * 1024,
           },
         },
+        exclude: /logo.svg/,
       },
       {
         test: /\.svg$/,
@@ -86,6 +87,7 @@ module.exports = {
             },
           },
         ],
+        exclude: /editor/,
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,

@@ -138,7 +138,6 @@ const ThreeSpace = (props: IThreeSpace) => {
   useEffect(() => {
     init();
     threeRender();
-    console.log(tasks);
   }, []);
   return <div className="today-three-panel" ref={todayGl} />;
 };
