@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63.1 (92452) - https://sketch.com -->
+    <title>新icon/下划线@3x</title>
+    <desc>Created with Sketch.</desc>
+    <g id="新icon/下划线" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="工具栏/下划线">
+            <g>
+                <rect id="Rectangle复制-21" fill="#000000" opacity="0" x="0" y="0" width="24" height="24"></rect>
+                <polygon id="Combined-Shape" fill="currentColor" points="5 19.6 18 19.6 18 18.3 5 18.3"></polygon>
+                <path d="M15.3,5.7 L7.7,5.7 L7.7,12.5 C7.7,13.549341 8.12532949,14.499341 8.81299423,15.1870058 C9.50065898,15.8746705 10.450659,16.3 11.5,16.3 C12.549341,16.3 13.499341,15.8746705 14.1870058,15.1870058 C14.8746705,14.499341 15.3,13.549341 15.3,12.5 L15.3,5.7 Z" id="矩形" stroke="currentColor" stroke-width="1.4"></path>
+                <rect id="矩形" fill="#F9FAFB" x="8.4" y="5" width="6.2" height="6"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

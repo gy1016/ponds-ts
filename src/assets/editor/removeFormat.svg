@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63.1 (92452) - https://sketch.com -->
+    <title>toolbar_clear_format</title>
+    <desc>Created with Sketch.</desc>
+    <g id="toolbar_clear_format" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="编组-6">
+            <rect id="Rectangle" fill="#000000" opacity="0" x="0" y="0" width="24" height="24"></rect>
+            <rect id="矩形备份-2" fill="#464D5A" x="5" y="18.25" width="14" height="1.25"></rect>
+            <path d="M13.3530966,4.97416939 L18.7530048,10.3740776 C18.9186874,10.5397602 18.9325896,10.8014537 18.797782,10.9934139 L18.7402644,11.0618065 L12.801,17 L11.112,17 L14.0432724,14.0699772 L9.65584699,9.68255182 L5.62814829,13.7102505 L8.918,17 L7.166,17 L4.24699522,14.0802708 C4.06060228,13.8938779 4.06630636,13.5859711 4.25973563,13.3925419 L12.6653677,4.9869098 C12.8587969,4.79348053 13.1667037,4.78777646 13.3530966,4.97416939 Z" id="形状结合" fill="#464D5A" fill-rule="nonzero"></path>
+            <polygon id="矩形" fill="#464D5A" points="7 15.75 13 15.75 12 17 8 17"></polygon>
+        </g>
+    </g>
+</svg>
