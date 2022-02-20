@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63.1 (92452) - https://sketch.com -->
+    <title>新icon/撤销@3x</title>
+    <desc>Created with Sketch.</desc>
+    <g id="新icon/撤销" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="编组-11">
+            <rect id="矩形" stroke="#979797" fill="#D8D8D8" opacity="0" x="0" y="0" width="24" height="24"></rect>
+            <g id="编组-10" transform="translate(4.000000, 4.625000)">
+                <path d="M4,3.625 L10,3.625 C12.7614237,3.625 15,5.61357625 15,8.375 C15,11.1364237 12.7614237,13.375 10,13.375 L3,13.375" id="路径" stroke="currentColor" stroke-width="1.25"></path>
+                <path d="M5,0.74736853 L5,6.27549914 C5,6.38595609 4.91045695,6.47549914 4.8,6.47549914 C4.76437198,6.47549914 4.72939069,6.46598189 4.69867355,6.44793159 L0.276169063,3.84913602 C0.18093725,3.79317496 0.14910201,3.67060893 0.205063064,3.57537711 C0.220480428,3.54914059 0.241681555,3.52676818 0.267051936,3.5099636 L4.68955642,0.580628565 C4.78164436,0.519632261 4.90574366,0.544837012 4.96673997,0.636924952 C4.98843217,0.669674323 5,0.70808656 5,0.74736853 Z" id="路径" fill="currentColor"></path>
+            </g>
+        </g>
+    </g>
+</svg>
