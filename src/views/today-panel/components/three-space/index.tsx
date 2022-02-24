@@ -1,5 +1,6 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import moment from 'moment';
+import { Card } from 'antd';
 import {
   Scene,
   Color,
@@ -16,6 +17,8 @@ import {
   ArrowHelper,
   Vector3,
   Group,
+  Vector2,
+  MeshLambertMaterial,
 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { ITaskResult } from '@/types/task';
@@ -24,50 +27,65 @@ interface IThreeSpace {
   tasks: ITaskResult[];
 }
 
+interface ITpMesh extends Mesh {
+  task?: ITaskResult;
+}
+
+const MAX_SIZE = 1000;
+const STEP = 200;
+let camera: PerspectiveCamera;
+let scene: Scene;
+let renderer: WebGLRenderer;
+let raycaster: Raycaster;
+let mouse = new Vector2();
+let plane: Mesh;
+let cubeGeo = new BoxGeometry(50, 50, 50);
+let INTERSECTED: any;
+let width: number;
+let height: number;
+// const importanceAndUrgency = new Group();
+// const importanceAntUnurgency = new Group();
+// const UnimportanceAndUrgency = new Group();
+// const UninportanceAndUnurgency = new Group();
+
 const ThreeSpace = (props: IThreeSpace) => {
   const { tasks } = props;
   const todayGl = useRef<HTMLDivElement>(null);
-  const MAX_SIZE = 1000;
-  const STEP = 200;
-  let camera: PerspectiveCamera;
-  let scene: Scene;
-  let renderer: WebGLRenderer;
-  let raycaster: Raycaster;
-  let plane: Mesh;
-  let cubeGeo = new BoxGeometry(50, 50, 50);
-  let cubeMaterial = new MeshBasicMaterial({ color: 0xfeb74c });
-  const importanceAndUrgency = new Group();
-  const importanceAntUnurgency = new Group();
-  const UnimportanceAndUrgency = new Group();
-  const UninportanceAndUnurgency = new Group();
+  const [cardVis, setCardVis] = useState<boolean>(false);
+  const [cardLeft, setCardLeft] = useState<string>('0px');
+  const [cardTop, setCardTop] = useState<string>('0px');
+  const [curTask, setCurTask] = useState<ITaskResult | null>(null);
+  let domRect: DOMRect;
 
   // 分类任务并映射坐标系
   const classifyTask = () => {
     const today = moment();
     if (!tasks.length) return;
     tasks.forEach((t, idx) => {
-      const tmp = new Mesh(cubeGeo, cubeMaterial);
+      const tmp: ITpMesh = new Mesh(cubeGeo, new MeshLambertMaterial({ color: Math.random() * 0xffffff }));
       const difDays = moment(t.endAt).diff(today, 'days');
       tmp.position.set(t.urgency * (MAX_SIZE / 5), difDays * STEP, t.importance * (MAX_SIZE / 5));
-      if (t.importance > 0 && t.urgency > 0) {
-        importanceAndUrgency.add(tmp);
-      } else if (t.importance > 0 && t.urgency < 0) {
-        importanceAntUnurgency.add(tmp);
-      } else if (t.importance < 0 && t.urgency > 0) {
-        UnimportanceAndUrgency.add(tmp);
-      } else {
-        UninportanceAndUnurgency.add(tmp);
-      }
+      tmp.task = t;
+      scene.add(tmp);
+      // if (t.importance > 0 && t.urgency > 0) {
+      //   importanceAndUrgency.add(tmp);
+      // } else if (t.importance > 0 && t.urgency < 0) {
+      //   importanceAntUnurgency.add(tmp);
+      // } else if (t.importance < 0 && t.urgency > 0) {
+      //   UnimportanceAndUrgency.add(tmp);
+      // } else {
+      //   UninportanceAndUnurgency.add(tmp);
+      // }
     });
-    scene.add(importanceAndUrgency);
-    scene.add(importanceAntUnurgency);
-    scene.add(UnimportanceAndUrgency);
-    scene.add(UninportanceAndUnurgency);
+    // scene.add(importanceAndUrgency);
+    // scene.add(importanceAntUnurgency);
+    // scene.add(UnimportanceAndUrgency);
+    // scene.add(UninportanceAndUnurgency);
   };
 
   // 初始化相机
   const initCamera = (width: number, height: number) => {
-    camera = new PerspectiveCamera(45, width / height, 50, 4000);
+    camera = new PerspectiveCamera(70, width / height, 1, 10000);
     camera.position.set(1000, 1000, 1000);
     camera.lookAt(0, 0, 0);
   };
@@ -116,8 +134,10 @@ const ThreeSpace = (props: IThreeSpace) => {
   };
 
   const init = () => {
-    const width = todayGl.current!.clientWidth;
-    const height = todayGl.current!.clientHeight;
+    width = todayGl.current!.clientWidth;
+    height = todayGl.current!.clientHeight;
+    // 初始化射线
+    raycaster = new Raycaster();
 
     initScene();
     initAxis();
@@ -131,15 +151,82 @@ const ThreeSpace = (props: IThreeSpace) => {
     todayGl.current?.appendChild(renderer.domElement);
   };
 
+  const calcIntersect = () => {
+    // 通过摄像机和鼠标位置更新射线
+    raycaster.setFromCamera(mouse, camera);
+    // 计算物体和射线的焦点
+    const intersects = raycaster.intersectObjects(scene.children);
+    // 判断是否选中物体，并且与之前不相等
+    if (intersects.length > 0 && INTERSECTED !== intersects[0].object) {
+      // 如果当前INTERSECTED不为空，把它的颜色改回去
+      if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
+      INTERSECTED = intersects[0].object;
+      INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
+      INTERSECTED.material.emissive.setHex(0xff0000);
+      setCardVis(true);
+      setCurTask(INTERSECTED.task);
+      const { x, y } = transPosition(INTERSECTED.position);
+      setCardLeft(x + 'px');
+      setCardTop(y + 'px');
+    } else if (!intersects.length) {
+      if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
+      INTERSECTED = null;
+      setCardVis(false);
+    }
+  };
+
   const threeRender = () => {
     renderer.render(scene, camera);
+  };
+
+  // 三维坐标转屏幕坐标的方法
+  const transPosition = (position: Vector3) => {
+    let worldVector = new Vector3(position.x, position.y, position.z);
+    let vector = worldVector.project(camera);
+    let halfWidth = width / 2;
+    let halfHeight = height / 2;
+    let x = Math.round(vector.x * halfWidth + halfWidth);
+    let y = Math.round(-vector.y * halfHeight + halfHeight);
+    if (x + 300 > width) {
+      x = x - 300;
+    }
+    if (y + 250 > height) {
+      y = y - 250;
+    }
+    return { x, y };
+  };
+
+  const panelMouseDown = (event: any) => {
+    if (!domRect) domRect = todayGl.current!.getBoundingClientRect();
+    event.preventDefault();
+    mouse.x = ((event.clientX - domRect!.left) / todayGl.current!.clientWidth) * 2 - 1;
+    mouse.y = -((event.clientY - domRect!.top) / todayGl.current!.clientHeight) * 2 + 1;
+    calcIntersect();
+    threeRender();
   };
 
   useEffect(() => {
     init();
     threeRender();
   }, []);
-  return <div className="today-three-panel" ref={todayGl} />;
+  return (
+    <div className="today-three-panel">
+      <div onClick={panelMouseDown} ref={todayGl} style={{ width: '100%', height: '100%' }} />
+      {cardVis ? (
+        <Card style={{ width: 300, height: 250, position: 'absolute', top: cardTop, left: cardLeft, padding: '5px' }}>
+          {curTask ? (
+            <>
+              <p>{curTask.describe}</p>
+              <p>{curTask.startAt}</p>
+              <p>{curTask.endAt}</p>
+              <p>{curTask.importance}</p>
+              <p>{curTask.urgency}</p>
+            </>
+          ) : null}
+        </Card>
+      ) : null}
+    </div>
+  );
 };
 
 export default ThreeSpace;
