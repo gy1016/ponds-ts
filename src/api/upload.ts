@@ -1,7 +1,8 @@
 import axios from 'axios';
 
+const instance = axios.create();
+
 export function uploadFile(data: any, onUploadProgress: (e: any) => any) {
-  const instance = axios.create();
   return instance({
     baseURL: 'http://121.199.160.202:5001',
     url: '/upload',
@@ -11,5 +12,20 @@ export function uploadFile(data: any, onUploadProgress: (e: any) => any) {
       'Content-Type': 'multipart/form-data',
     },
     onUploadProgress,
+  });
+}
+
+export function mergeFile(size: number, fileName: string) {
+  return instance({
+    baseURL: 'http://121.199.160.202:5001',
+    url: '/merge',
+    method: 'post',
+    headers: {
+      'content-type': 'application/json',
+    },
+    data: JSON.stringify({
+      size,
+      fileName,
+    }),
   });
 }
