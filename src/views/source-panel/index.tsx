@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Button } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
-import { uploadFile, mergeFile } from '@/api/upload';
+import { Button, message } from 'antd';
+import { UploadOutlined, PauseOutlined, CaretRightOutlined } from '@ant-design/icons';
+import { uploadFile, mergeFile, verifyUpload, pauseUpload } from '@/api/upload';
 import TpProgress from './components/progress';
 import './index.less';
 
@@ -41,8 +41,15 @@ const SourcePanel: FC = () => {
     mergeFile(5 * 1024 * 1024, fileObj.file.name);
   };
 
-  const handleUpload = () => {
+  const handleUpload = async () => {
     if (!fileObj.file) return;
+    const {
+      data: { shouldUpload },
+    }: any = await verifyUpload(fileObj.file.name);
+    if (!shouldUpload) {
+      message.success('秒传：上传成功！');
+      return;
+    }
     const chunkList = createChunk(fileObj.file);
     const tmp = chunkList.map(({ file }: any, index: number) => ({
       file,
@@ -68,11 +75,24 @@ const SourcePanel: FC = () => {
     return chunkList;
   };
 
+  const keepUpload = async () => {
+    const {
+      data: { uploadedList },
+    }: any = await verifyUpload(fileObj.file.name);
+    uploadChunks(uploadedList);
+  };
+
   return (
     <div className="source-panel">
       <input type="file" onChange={handleFileChange} />
       <Button icon={<UploadOutlined />} onClick={handleUpload}>
         Upload
+      </Button>
+      <Button icon={<PauseOutlined />} onClick={pauseUpload}>
+        Pause
+      </Button>
+      <Button icon={<CaretRightOutlined />} onClick={keepUpload}>
+        Continue
       </Button>
       {fileObj.file ? <TpProgress chunkList={chunkList} totalSize={fileObj.file?.size || 0} /> : null}
     </div>
