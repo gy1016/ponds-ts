@@ -76,7 +76,7 @@ UI 由团队成员 `Jiyueyue` 使用 Figma 软件，结合作品主题，选用�
 
 ### 前端
 
-- 部署地址：[121.199.160.202/taskponds/](http://121.199.160.202/taskponds/)
+- 部署地址：[127.0.0.1/taskponds/](http://121.199.160.202/taskponds/)
 - 仓库地址：[gy1016/ponds-ts](https://github.com/gy1016/ponds-ts)
 
 前端由团队共同开发，主要使用 `React` 框架并结合 `TypeScript` 进行开发，自行利用 `Webpack` 搭建项目，并进行了项目代码(Prettier+Eslint)、样式(stylelint)与提交(commitlint)格式规范的配置。
@@ -147,7 +147,7 @@ export default TpViewArr;
 
 ### 后端
 
-- API 地址：[121.199.160.202:5000/api/pond](http://121.199.160.202:5000/api/pond)
+- API 地址：[127.0.0.1/api/pond](http://127.0.0.1/api/pond)
 - 项目地址：[gy1016/ponds-serve](https://github.com/gy1016/ponds-serve)
 
 后端使用 `Koa` 采用 `MVC` 架构，运用 `MySQL` + `Sequelize` 进行后端的接口，使用 `jwt` `koa-bodyparser` `koa2-cors` 等中间件实现授权，返回结果JSON化与跨域。
